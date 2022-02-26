@@ -9,7 +9,6 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    print(os.getenv("USER"))
     # SQLALCHEMY_DATABASE_URI = f'postgresql+psycopg2://{os.getenv("USER")}:{os.getenv("PASSWORD")}@{os.getenv("HOST")}:{os.getenv("PORT")}/{os.getenv("DATABASE")}'
     SQLALCHEMY_DATABASE_URI = "postgresql://postgres:admin@localHost:5432/cargill"
 

@@ -8,7 +8,8 @@ from flask_apispec.extension import FlaskApiSpec
 
 
 app = Flask(__name__)
-app.config.from_object(os.environ['APP_SETTINGS'])
+# app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:admin@localHost:5432/cargill"
 app.config.update({
     'APISPEC_SPEC': APISpec(
         title='Cargil API',

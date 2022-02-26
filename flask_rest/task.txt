@@ -1,5 +1,0 @@
-setup a project and env - done
-setup postgres database - done 
-env setting file - done
-install node js - done
-run nodejs with reactj
