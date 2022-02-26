@@ -5,8 +5,6 @@ pipenv
 postgres
 node / npm
 
-
-
 # create a virtual environment
 >> python -m pipenv install
 
@@ -28,4 +26,7 @@ node / npm
 
 # add env varibales
 >> export APP_SETTINGS="config.DevelopmentConfig"
+
+# run the app
+>> python app.py
 
