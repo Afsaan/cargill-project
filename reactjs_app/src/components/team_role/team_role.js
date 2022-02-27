@@ -1,12 +1,37 @@
 import React, {useState, useEffect} from "react";
-import {Button} from '@mui/material';
+import {Alert, Button, Snackbar} from '@mui/material';
 
 export const TeamRole = ({ listOfRole,listOfTeam }) =>{
 
     const [role , setRole] = useState("ML engineer")
     const [team , setTeam] = useState("ML")
     const [message , setMessage] = useState(null)
+    const [open, setOpen] = React.useState(false);
+    const [messageType, setMessageType] = useState("")
 
+    const handleClick = () => {
+      setOpen(true);
+    };
+  
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setOpen(false);
+    };
+
+    const AlertBox = () => {
+        return(
+            <>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity={messageType} sx={{ width: '100%' }}>
+                        {message}
+                </Alert>
+            </Snackbar>
+            </>
+        )
+    }
 
     const submitForm = () => {
         fetch('map-role/', {
@@ -20,10 +45,14 @@ export const TeamRole = ({ listOfRole,listOfTeam }) =>{
             .then(data => {
             const success = "Successfully Mapped the Role and Team"
             setMessage(success);
+            setOpen(true)
+            setMessageType("success")
             })
             .catch((error) => {
             const success = "Some Probelm Occured"
             setMessage(success);
+            setOpen(true)
+            setMessageType("error")
             });
     }
     
@@ -54,8 +83,9 @@ export const TeamRole = ({ listOfRole,listOfTeam }) =>{
             </div>
             <br></br>
             <Button type='submit' onClick={submitForm} variant="contained">Add</Button>
+            
+            {<div>{message?<AlertBox/>:""}</div>}
 
-            {<div>{message}</div>}
             
         </>
     )

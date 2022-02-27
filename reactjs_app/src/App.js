@@ -4,18 +4,23 @@ import { ShowRoles } from "./components/roles/get_roles";
 import { TeamRole } from "./components/team_role/team_role";
 import {Grid, Container} from '@mui/material';
 
-
-
 function App() {
   const [role , setRole] = useState([]);
   const [team , setTeam] = useState([]);
 
   const getData = async() => {
+    try
+    {
       const response_role = await fetch("role/");
       const response_team = await fetch("team/");
     
       setRole(await response_role.json());
       setTeam(await response_team.json());
+    }
+    catch(err){
+      console.log('api is not working')
+    }
+     
   }
 
   useEffect(() => { 
