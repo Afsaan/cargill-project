@@ -1,25 +1,14 @@
-import os
 from flask import Flask
 from flask_restful import Api
-from apispec import APISpec
-from apispec.ext.marshmallow import MarshmallowPlugin
 from flask_sqlalchemy import SQLAlchemy
 from flask_apispec.extension import FlaskApiSpec
+from config import Swagger
 
 
 app = Flask(__name__)
 # app.config.from_object(os.environ['APP_SETTINGS'])
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:admin@localHost:5432/cargill"
-app.config.update({
-    'APISPEC_SPEC': APISpec(
-        title='Cargil API',
-        version='v1',
-        plugins=[MarshmallowPlugin()],
-        openapi_version='2.0.0'
-    ),
-    'APISPEC_SWAGGER_URL': '/swagger/',  # URI to access API Doc JSON 
-    'APISPEC_SWAGGER_UI_URL': '/docs/'  # URI to access UI of API Doc
-})
+app.config.update(Swagger().swagger_config)
 
 db = SQLAlchemy(app)
 # manager = Manager(app)

@@ -1,0 +1,16 @@
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 977-767-811
+INFO:werkzeug: * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+INFO:werkzeug:127.0.0.1 - - [28/Feb/2022 23:30:00] "GET /docs/ HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [28/Feb/2022 23:30:00] "[36mGET /flask-apispec/static/swagger-ui-standalone-preset.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Feb/2022 23:30:00] "[36mGET /flask-apispec/static/swagger-ui-bundle.js HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Feb/2022 23:30:00] "[36mGET /flask-apispec/static/swagger-ui.css HTTP/1.1[0m" 304 -
+INFO:werkzeug:127.0.0.1 - - [28/Feb/2022 23:30:00] "GET /swagger/ HTTP/1.1" 200 -
+INFO:models:Role added for <Role 7>
+INFO:werkzeug:127.0.0.1 - - [28/Feb/2022 23:30:41] "POST /role/ HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in 'D:\\personal_project\\cargill\\flask_rest\\app.py', reloading
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 977-767-811
+INFO:werkzeug: * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)

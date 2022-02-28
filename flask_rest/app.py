@@ -1,42 +1,51 @@
-import imp
-from flask_restful import Api, Resource
-from flask import Flask, request, jsonify
+import logging
+from flask_restful import Resource
+from flask import request, jsonify
 from flask_migrate import Migrate 
 from flask_apispec.views import MethodResource
-from flask_apispec import doc, use_kwargs
+from flask_apispec import doc, use_kwargs, marshal_with
 from models import app, docs, db, Role, Team, api
+from config import path
 from serializer import (
                         role_serializer, 
                         team_serializer, 
                         RolePayloadSchema, 
                         TeamPayloadSchema, 
-                        TeamRolePayloadSchema
+                        TeamRolePayloadSchema,
+                        RoleResponseSchema,
+                        TeamResponseSchema,
+                        TeamRoleResponseSchema
                         )
-
+logging.basicConfig(filename=f'{path.logging_path}', level=30)
 migrate = Migrate(app, db)
 
 class RoleAPI(MethodResource, Resource):
 
-    @doc(description='Role API', tags=['Role'])
+    @doc(description='Get all the roles', tags=['Role'])
+    @marshal_with(RoleResponseSchema, code=200)
     def get(self):
         return jsonify(list(map(role_serializer, Role.query.all())))
 
-    @doc(description='Role API', tags=['Role'])
+    @doc(description='Add roles', tags=['Role'])
     @use_kwargs(RolePayloadSchema, location=('json'))
+    @marshal_with(None, code=200, description='{"msg": "Role added "}')
     def post(self, role):
         role = Role(request.get_json()['role'])
         db.session.add(role)
         db.session.commit()
+        app.logger.info(f'Role added for {role}')
         return jsonify({"msg": "Role added "})
 
 class TeamAPI(MethodResource, Resource):
 
-    @doc(description='Team API', tags=['Team'])
+    @doc(description='Get all the teams', tags=['Team'])
+    @marshal_with(TeamResponseSchema, code=200)
     def get(self):
         return jsonify(list(map(team_serializer, Team.query.all())))
 
-    @doc(description='Team API', tags=['Team'])
+    @doc(description='add teams', tags=['Team'])
     @use_kwargs(TeamPayloadSchema, location=('json'))
+    @marshal_with(None, code=200, description = '{"msg": "Team added "}')
     def post(self):
         team = Team(request.get_json()['team'])
         db.session.add(team)
@@ -45,7 +54,8 @@ class TeamAPI(MethodResource, Resource):
         return jsonify({"msg": "Team added "})
 
 class GetTeamRoleAPI(MethodResource, Resource):
-    @doc(description='Get Team Role API', tags=['Get Assocaited Role'])
+    @doc(description='Get associated Roles with Teams', tags=['Get Assocaited Role'])
+    @marshal_with(RoleResponseSchema, code=200)
     def get(self, team):
         team = Team.query.filter_by(name=team).first()
         if team != None:
@@ -56,8 +66,9 @@ class GetTeamRoleAPI(MethodResource, Resource):
 
 class AddTeamRoleAPI(MethodResource, Resource):
 
-    @doc(description='Add Team Role API', tags=['Manage Team Role'])
-    @use_kwargs(TeamRolePayloadSchema, location=('json'))
+    @doc(description='To map the given team with given roles', tags=['Manage Team Role'])
+    @use_kwargs(TeamRolePayloadSchema, location=('json')) #TeamRoleResponseSchema
+    @marshal_with(None, code=200, description="{'data' : 'team and role mapped'}")
     def post(self, team, role):
         
         #get role object

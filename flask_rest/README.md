@@ -36,3 +36,7 @@
 
 ### to check the security vulnerability of all packages
 >> safety check -r requirements.txt
+
+
+### to start the node server
+>> npm start
