@@ -27,7 +27,7 @@
 ### add env varibales
 >> export APP_SETTINGS="config.DevelopmentConfig"
 
-### run the app
+### run the apps
 >> python app.py
 
 
